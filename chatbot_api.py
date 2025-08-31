@@ -17,7 +17,7 @@ app = FastAPI(title="Hassan Iftikhar Portfolio Chatbot API")
 # Add CORS middleware to allow React frontend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "https://hassan-portfolio-frontend.onrender.com", "https://hassan-portfolio-api.onrender.com"],  # Add your domain
+    allow_origins=["http://localhost:3000", "https://hassan-portfolio-frontend.onrender.com", "https://hassan-portfolio-api.onrender.com", "https://portfolio-frontend-tbsb.onrender.com"],  # Add your domain
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
