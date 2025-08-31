@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: hassan-portfolio-api
+    name: hassan
     env: docker
     dockerfilePath: ./Dockerfile
     envVars:
@@ -12,11 +12,9 @@ services:
         sync: false
 
   - type: web
-    name: hassan-portfolio-frontend
+    name: portfolio-frontend
     env: docker
     dockerfilePath: ./Dockerfile.frontend.prod
     envVars:
       - key: REACT_APP_API_URL
-        value: https://hassan-portfolio-api.onrender.com
-      - key: REACT_APP_CHATBOT_API_URL
-        value: https://hassan-portfolio-api.onrender.com
+        value: https://personal-website-7s6r.onrender.com
