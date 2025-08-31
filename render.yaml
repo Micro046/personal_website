@@ -17,4 +17,4 @@ services:
     dockerfilePath: ./Dockerfile.frontend.prod
     envVars:
       - key: REACT_APP_API_URL
-        value: https://portfolio-backend.onrender.com
+        value: https://personal-website-7s6r.onrender.com
