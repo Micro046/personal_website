@@ -17,11 +17,15 @@ app = FastAPI(title="Hassan Iftikhar Portfolio Chatbot API")
 # Add CORS middleware to allow React frontend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "https://yourdomain.com"],  # Add your domain
+    allow_origins=["http://localhost:3000", "https://yourdomain.com", "https://personal-website-7s6r.onrender.com"],  # Add your domain
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.get("/health")
+async def health_check():
+    return {"message": "Hassan Iftikhar Portfolio Chatbot API", "status": "running"}
 
 # Initialize Gemini
 google_api_key = os.getenv("GOOGLE_API_KEY")
