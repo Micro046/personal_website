@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: portfolio-backend
+    name: hassan
     env: docker
     dockerfilePath: ./Dockerfile
     envVars:
