@@ -1,77 +1,73 @@
+# Hassan Iftikhar Portfolio Chatbot
 
-<h2>
-  Personal Portfolio
-  <a href="https://rodrigo-arenas.github.io/portfolio" target="_blank">Website</a>
-</h2>
+An AI-powered chatbot for Hassan Iftikhar's portfolio website that can answer questions about his experience, skills, and projects.
 
-This is my website to resume my work as a data scientist.
-The page mainly uses React and MUI and is inspired by open-source components.
+## Features
 
-Feel free to use this project as a template, and please give a small credit by linking back to this project.
-If you found this project helpful, consider giving it a 
-[star](https://github.com/rodrigo-arenas/portfolio/stargazers) [⭐](https://github.com/rodrigo-arenas/portfolio/stargazers)
+- 🤖 AI-powered chatbot using Google Gemini
+- 💬 Real-time chat interface
+- 📄 Resume and summary integration
+- 🌐 Multi-language support (English, Spanish, Russian)
+- 📧 Contact tracking and notifications
+- 🚀 FastAPI backend with React frontend
 
-**[Live Demo](https://rodrigo-arenas.github.io/portfolio/)**
+## Quick Start
 
-<img src="./src/assets/images/website.gif" alt="demo">
+1. **Install dependencies:**
+   ```bash
+   uv sync
+   ```
 
+2. **Set up environment variables:**
+   ```bash
+   # Create .env file
+   GOOGLE_API_KEY=your_google_api_key_here
+   PUSHOVER_USER=your_pushover_user_key  # Optional
+   PUSHOVER_TOKEN=your_pushover_app_token  # Optional
+   ```
 
-## Installation Guide
+3. **Start the backend:**
+   ```bash
+   uv run python chatbot_api.py
+   ```
 
-* Fork the project 
-  ```
-  https://github.com/rodrigo-arenas/portfolio/fork
-  ```
-* Clone your fork
-  ```
-  git clone https://github.com/{yourusername}/portfolio.git
-  ```
-* Install the packages
-  ```
-  npm install
-  ```
-* Start the project
-  ```
-  npm start
-  ```
+4. **Start the React frontend:**
+   ```bash
+   npm start
+   ```
 
-## Customize your information
+## Architecture
 
-All the content (text, icons, links, etc.) are configured in the `assets` folders,
-it has two kinds:
+- **Backend:** FastAPI with Google Gemini AI
+- **Frontend:** React with Material-UI
+- **Package Manager:** UV for Python dependencies
+- **AI Model:** Google Gemini 2.5 Flash
 
-### Configs:
+## File Structure
 
-There is one configuration file per page or main component, for example, if you want
-to modify the footer icons and hyperlinks, go to the footerConfig.js file
-
-![footer](src/assets/images/footer.png)
-
-Here, you can modify all the values but keep the key's names, structure, and className the same; 
-you can also add new values to the configs containing a list.
-
-
-### Images:
-
-This folder keeps images displayed over some routes, like blogs and projects.
-For example, inside the projectsConfig.js file, the list of projects has a property called "image":
-
-![projects_config.png](src/assets/images/projects_config.png)
-
-You can set any valid href for the `<a/>` tag as an image URL or, like in the above image, 
-an image from the `assets/images` folder.
-
-![projects_images](projects_images.png)
-
-
-### Set Google Analytics track (Optional):
-
-Take the `.env.example` file, put your tracking ID in the 
-variable `REACT_APP_TRACKING_ID`, and rename the file to `.env`
-
-## Troubleshooting
-
-If you see any error of unexpected token ">" while deploying, try to remove the following from the `package.json` file:
 ```
-"homepage": "https://rodrigo-arenas.github.io/portfolio",
+portfolio/
+├── resume/
+│   ├── HassanIftikharResume.pdf
+│   └── summary.txt
+├── src/
+│   └── components/
+│       └── Chatbot.jsx
+├── chatbot_api.py
+├── pyproject.toml
+├── requirements.txt
+├── .env
+└── README.md
 ```
+
+## API Endpoints
+
+- `POST /chat` - Chat with the AI assistant
+- `GET /health` - Health check
+- `GET /` - API information
+
+## Development
+
+This project uses UV for Python dependency management and npm for React dependencies.
+
+For more detailed setup instructions, see `UV_SETUP.md` and `CHATBOT_SETUP.md`.

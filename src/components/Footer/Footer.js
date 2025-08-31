@@ -1,23 +1,29 @@
-import React, { useMemo } from 'react';
-import { Container, Box, Typography, Button, Stack } from '@mui/material';
+import React from 'react';
+import { Container, Box, Typography, Button, Stack, Tooltip } from '@mui/material';
 import FooterItems from './FooterItems';
 import { useLang } from '../../utils/i18n';
-import { withUtm } from '../../utils/withUtm';
 
 const COPY = {
   en: {
-    headline: "Let’s build something that ships",
-    sub: "Strategy, prototypes, and production ML in weeks — not quarters.",
-    cta: "Book a Call",
+    headline: "Exploring the future of AI & Data Science",
+    sub: "From machine learning and deep learning to generative AI — building impactful solutions that solve real-world problems.",
+    cta: "Get in Touch",
     projects: "View Projects",
-    subject: "Consulting Inquiry",
+    subject: "Collaboration Inquiry",
   },
   es: {
-    headline: "Construyamos algo que salga a producción",
-    sub: "Estrategia, prototipos y ML en producción en semanas — no trimestres.",
-    cta: "Agendar llamada",
+    headline: "Explorando el futuro de la IA y la Ciencia de Datos",
+    sub: "Desde el aprendizaje automático y profundo hasta la IA generativa — creando soluciones con impacto real.",
+    cta: "Contactar",
     projects: "Ver proyectos",
-    subject: "Consulta de consultoría",
+    subject: "Consulta de colaboración",
+  },
+  ru: {
+    headline: "Исследуем будущее ИИ и науки о данных",
+    sub: "От машинного обучения и глубокого обучения до генеративного ИИ — создаем эффективные решения для реальных проблем.",
+    cta: "Связаться",
+    projects: "Смотреть проекты",
+    subject: "Запрос о сотрудничестве",
   },
 };
 
@@ -25,14 +31,53 @@ export default function Footer() {
   const [lang] = useLang();
   const t = COPY[lang] || COPY.en;
 
+  // 👉 Replace with your email or set EMAIL in .env
+  const EMAIL = process.env.EMAIL || 'hassaniftikhar62@gmail.com';
 
-  const EMAIL = process.env.EMAIL || '';
-
-  const emailHref = useMemo(() => {
+  const handleContact = () => {
     const subject = encodeURIComponent(t.subject);
-    if (!EMAIL) return '#';
-    return withUtm(`mailto:${EMAIL}?subject=${subject}`, 'footer_cta');
-  }, [EMAIL, t.subject]);
+    const body = encodeURIComponent(`Hi Hassan,\n\nI came across your portfolio and would like to connect with you.\n\nBest regards,`);
+    
+    // Create Gmail compose URL
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${EMAIL}&su=${subject}&body=${body}`;
+    
+    // Try to open Gmail in new window/tab only
+    try {
+      // Method 1: Try window.open with specific features
+      const newWindow = window.open(gmailUrl, '_blank', 'noopener,noreferrer,width=800,height=600');
+      
+      // Check if popup was blocked
+      if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
+        // Method 2: Create a temporary link and click it
+        const tempLink = document.createElement('a');
+        tempLink.href = gmailUrl;
+        tempLink.target = '_blank';
+        tempLink.rel = 'noopener noreferrer';
+        document.body.appendChild(tempLink);
+        tempLink.click();
+        document.body.removeChild(tempLink);
+      }
+    } catch (error) {
+      // Method 3: Create a temporary link and click it
+      try {
+        const tempLink = document.createElement('a');
+        tempLink.href = gmailUrl;
+        tempLink.target = '_blank';
+        tempLink.rel = 'noopener noreferrer';
+        document.body.appendChild(tempLink);
+        tempLink.click();
+        document.body.removeChild(tempLink);
+      } catch (linkError) {
+        // Method 4: Fallback to clipboard copy
+        navigator.clipboard.writeText('hassaniftikhar62@gmail.com').then(() => {
+          alert(`Gmail couldn't open automatically.\n\nEmail copied to clipboard: hassaniftikhar62@gmail.com\n\nPlease:\n1. Go to gmail.com\n2. Click Compose\n3. Paste this email: hassaniftikhar62@gmail.com\n4. Add subject: ${t.subject}`);
+        }).catch(() => {
+          // Final fallback: show detailed instructions
+          alert(`Contact me at: hassaniftikhar62@gmail.com\n\nSince Gmail couldn't open automatically:\n\n1. Go to gmail.com\n2. Click "Compose"\n3. Add To: hassaniftikhar62@gmail.com\n4. Add Subject: ${t.subject}\n5. Add your message\n\nOr copy this email: hassaniftikhar62@gmail.com`);
+        });
+      }
+    }
+  };
 
   return (
     <Box sx={{ bgcolor: 'primary.main', color: '#fff', mt: 6 }}>
@@ -44,29 +89,29 @@ export default function Footer() {
           {t.sub}
         </Typography>
         <Stack direction="row" spacing={2} justifyContent="center" sx={{ mb: 3 }}>
-          <Button
-            href={emailHref}
-            variant="contained"
-            color="secondary"
-            aria-label={t.cta}
-          >
-            {t.cta}
-          </Button>
-          <Button
-            href="/projects"
-            variant="outlined"
-            sx={{ color: '#fff', borderColor: 'rgba(255,255,255,.4)' }}
-          >
-            {t.projects}
-          </Button>
+                                  <Tooltip title={`Click to open Gmail compose with hassaniftikhar62@gmail.com`}>
+              <Button
+                onClick={handleContact}
+                variant="contained"
+                color="secondary"
+                aria-label={t.cta}
+              >
+                {t.cta}
+              </Button>
+            </Tooltip>
+            <Button
+              href="/projects"
+              variant="outlined"
+              sx={{ color: '#fff', borderColor: 'rgba(255,255,255,.4)' }}
+            >
+              {t.projects}
+            </Button>
         </Stack>
         <FooterItems />
         <Typography variant="caption" sx={{ display: 'block', mt: 2, opacity: 0.75 }}>
-          © {new Date().getFullYear()} Rodrigo Arenas
+          © {new Date().getFullYear()} Hassan Iftikhar
         </Typography>
       </Container>
     </Box>
   );
 }
-
-

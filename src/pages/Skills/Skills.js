@@ -6,12 +6,28 @@ import { useLang } from '../../utils/i18n';
 
 const UI = {
   en: {
-    main: 'Main Skills & Tools',
-    complementary: 'Complementary Skills & Tools',
+    core: 'Core AI & ML Skills',
+    data: 'Data Analysis & Visualization',
+    cloud: 'Cloud & DevOps',
+    programming: 'Programming & Development',
+    database: 'Databases & Warehousing',
+    tools: 'Workflow & Tools',
   },
   es: {
-    main: 'Habilidades y herramientas principales',
-    complementary: 'Habilidades y herramientas complementarias',
+    core: 'Habilidades principales en IA y ML',
+    data: 'Análisis de datos y visualización',
+    cloud: 'Nube y DevOps',
+    programming: 'Programación y desarrollo',
+    database: 'Bases de datos y almacenamiento',
+    tools: 'Flujo de trabajo y herramientas',
+  },
+  ru: {
+    core: 'Основные навыки ИИ и МО',
+    data: 'Анализ данных и визуализация',
+    cloud: 'Облачные технологии и DevOps',
+    programming: 'Программирование и разработка',
+    database: 'Базы данных и хранилища',
+    tools: 'Рабочие процессы и инструменты',
   },
 };
 
@@ -24,9 +40,14 @@ const Section = ({ title, children }) => (
       borderRadius: 3,
       boxShadow: '0 6px 20px rgba(15,18,32,0.08), 0 1px 2px rgba(15,18,32,0.04)',
       border: `1px solid ${theme.palette.divider}`,
+      mb: 6,
     })}
   >
-    <Typography variant="h3" component="h1" sx={{ color: 'text.primary', py: 2, fontWeight: 900, letterSpacing: -0.4 }}>
+    <Typography
+      variant="h3"
+      component="h2"
+      sx={{ color: 'text.primary', py: 2, fontWeight: 900, letterSpacing: -0.4 }}
+    >
       <strong>{title}</strong>
     </Typography>
     {children}
@@ -39,24 +60,43 @@ export default function Skills() {
 
   return (
     <section id="skills">
-      <Container maxWidth="lg" sx={{ mb: 6 }}>
-        <Section title={t.main}>
-          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
-            <SkillsItems config={skillsConfig.mainSkills} />
+      <Container maxWidth="lg">
+        <Section title={t.core}>
+          <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', mt: 2 }}>
+            <SkillsItems config={skillsConfig.coreSkills} />
           </Box>
         </Section>
-      </Container>
 
-      <Container maxWidth="lg" sx={{ mb: 2 }}>
-        <Section title={t.complementary}>
-          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
-            <SkillsItems config={skillsConfig.complementarySkills} />
+        <Section title={t.data}>
+          <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', mt: 2 }}>
+            <SkillsItems config={skillsConfig.dataSkills} />
+          </Box>
+        </Section>
+
+        <Section title={t.cloud}>
+          <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', mt: 2 }}>
+            <SkillsItems config={skillsConfig.cloudSkills} />
+          </Box>
+        </Section>
+
+        <Section title={t.programming}>
+          <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', mt: 2 }}>
+            <SkillsItems config={skillsConfig.programmingSkills} />
+          </Box>
+        </Section>
+
+        <Section title={t.database}>
+          <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', mt: 2 }}>
+            <SkillsItems config={skillsConfig.databaseSkills} />
+          </Box>
+        </Section>
+
+        <Section title={t.tools}>
+          <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', mt: 2 }}>
+            <SkillsItems config={skillsConfig.toolSkills} />
           </Box>
         </Section>
       </Container>
     </section>
   );
 }
-
-
-

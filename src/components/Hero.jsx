@@ -1,51 +1,107 @@
 import React from 'react';
-import { Box, Button, Chip, Container, Stack, Typography } from '@mui/material';
+import { Box, Button, Chip, Container, Stack, Typography, Tooltip } from '@mui/material';
 import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import SecurityIcon from '@mui/icons-material/Security';
 import { useLang } from '../utils/i18n';
-import { withUtm } from '../utils/withUtm';
 
 const UI = {
   en: {
-    h1_a: 'Ship ',
-    h1_b: 'Production ML ',
-    h1_c: 'Faster',
-    sub: 'I design and deploy ML that moves KPIs: LLM assistants, RAG search, AutoML pipelines, and analytics on Azure — from prototype to production.',
+    h1_a: 'Data Scientist & ',
+    h1_b: 'AI Researcher ',
+    h1_c: 'Expert',
+    sub: 'Specializing in Machine Learning, Deep Learning, Reinforcement Learning, and Generative AI. Building end-to-end ML solutions that drive measurable business impact.',
     bullets: [
-      { icon: <RocketLaunchIcon />, label: 'Weeks, not quarters' },
-      { icon: <AutoAwesomeIcon />, label: 'LLMs, RAG, AutoML' },
-      { icon: <SecurityIcon />, label: 'Battle‑tested in production' },
+      { icon: <RocketLaunchIcon />, label: 'ML & Deep Learning' },
+      { icon: <AutoAwesomeIcon />, label: 'Reinforcement Learning' },
+      { icon: <SecurityIcon />, label: 'Computer Vision & NLP' },
     ],
-    ctaPrimary: 'Book a Free Intro Call',
-    ctaSecondary: 'See Projects',
-    subject: 'Consulting Inquiry',
+    ctaPrimary: 'View Projects',
+    ctaSecondary: 'Contact Me',
+    subject: 'Portfolio Inquiry',
     seenIn: 'Experience at',
   },
   es: {
-    h1_a: 'Lleva ',
-    h1_b: 'ML a producción ',
-    h1_c: 'más rápido',
-    sub: 'Diseño e implemento ML que mueve KPIs: asistentes con LLMs, búsqueda RAG, pipelines de AutoML y analítica en Azure — del prototipo a producción.',
+    h1_a: 'Científico de Datos y ',
+    h1_b: 'Investigador en IA',
+    h1_c: 'Experto',
+    sub: 'Especializado en Aprendizaje Automático, Aprendizaje Profundo, Aprendizaje por Refuerzo e IA Generativa. Construyendo soluciones ML completas que generan impacto empresarial medible.',
     bullets: [
-      { icon: <RocketLaunchIcon />, label: 'Semanas, no trimestres' },
-      { icon: <AutoAwesomeIcon />, label: 'LLMs, RAG, AutoML' },
-      { icon: <SecurityIcon />, label: 'Probado en producción' },
+      { icon: <RocketLaunchIcon />, label: 'ML y Aprendizaje Profundo' },
+      { icon: <AutoAwesomeIcon />, label: 'Aprendizaje por Refuerzo' },
+      { icon: <SecurityIcon />, label: 'Visión por Computador y PLN' },
     ],
-    ctaPrimary: 'Agendar llamada',
-    ctaSecondary: 'Ver proyectos',
-    subject: 'Consulta de consultoría',
+    ctaPrimary: 'Ver Proyectos',
+    ctaSecondary: 'Contactarme',
+    subject: 'Consulta de Portafolio',
     seenIn: 'Experiencia en',
+  },
+  ru: {
+    h1_a: 'Специалист по данным и ',
+    h1_b: 'Исследователь ИИ',
+    h1_c: 'Эксперт',
+    sub: 'Специализируюсь на машинном обучении, глубоком обучении, обучении с подкреплением и генеративном ИИ. Создаю комплексные ML решения, которые обеспечивают измеримое бизнес-воздействие.',
+    bullets: [
+      { icon: <RocketLaunchIcon />, label: 'ML и глубокое обучение' },
+      { icon: <AutoAwesomeIcon />, label: 'Обучение с подкреплением' },
+      { icon: <SecurityIcon />, label: 'Компьютерное зрение и NLP' },
+    ],
+    ctaPrimary: 'Смотреть проекты',
+    ctaSecondary: 'Связаться со мной',
+    subject: 'Запрос о портфолио',
+    seenIn: 'Опыт в',
   },
 };
 
 export default function Hero() {
   const [lang] = useLang();
   const t = UI[lang] || UI.en;
-  const EMAIL = process.env.EMAIL || '';
-  const mailHref = EMAIL
-    ? withUtm(`mailto:${EMAIL}?subject=${encodeURIComponent(t.subject)}`, 'hero_cta')
-    : '#';
+  const EMAIL = process.env.EMAIL || 'hassaniftikhar62@gmail.com';
+
+  const handleContact = () => {
+    const subject = encodeURIComponent(t.subject);
+    const body = encodeURIComponent(`Hi Hassan,\n\nI came across your portfolio and would like to connect with you.\n\nBest regards,`);
+    
+    // Create Gmail compose URL
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${EMAIL}&su=${subject}&body=${body}`;
+    
+    // Try to open Gmail in new window/tab only
+    try {
+      // Method 1: Try window.open with specific features
+      const newWindow = window.open(gmailUrl, '_blank', 'noopener,noreferrer,width=800,height=600');
+      
+      // Check if popup was blocked
+      if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
+        // Method 2: Create a temporary link and click it
+        const tempLink = document.createElement('a');
+        tempLink.href = gmailUrl;
+        tempLink.target = '_blank';
+        tempLink.rel = 'noopener noreferrer';
+        document.body.appendChild(tempLink);
+        tempLink.click();
+        document.body.removeChild(tempLink);
+      }
+    } catch (error) {
+      // Method 3: Create a temporary link and click it
+      try {
+        const tempLink = document.createElement('a');
+        tempLink.href = gmailUrl;
+        tempLink.target = '_blank';
+        tempLink.rel = 'noopener noreferrer';
+        document.body.appendChild(tempLink);
+        tempLink.click();
+        document.body.removeChild(tempLink);
+      } catch (linkError) {
+        // Method 4: Fallback to clipboard copy
+        navigator.clipboard.writeText('hassaniftikhar62@gmail.com').then(() => {
+          alert(`Gmail couldn't open automatically.\n\nEmail copied to clipboard: hassaniftikhar62@gmail.com\n\nPlease:\n1. Go to gmail.com\n2. Click Compose\n3. Paste this email: hassaniftikhar62@gmail.com\n4. Add subject: ${t.subject}`);
+        }).catch(() => {
+          // Final fallback: show detailed instructions
+          alert(`Contact me at: hassaniftikhar62@gmail.com\n\nSince Gmail couldn't open automatically:\n\n1. Go to gmail.com\n2. Click "Compose"\n3. Add To: hassaniftikhar62@gmail.com\n4. Add Subject: ${t.subject}\n5. Add your message\n\nOr copy this email: hassaniftikhar62@gmail.com`);
+        });
+      }
+    }
+  };
 
   return (
     <Box
@@ -108,12 +164,14 @@ export default function Hero() {
 
           {/* CTAs */}
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-            <Button href={mailHref} variant="contained" color="secondary" size="large" aria-label={t.ctaPrimary}>
+            <Button component="a" href="/projects" variant="contained" color="secondary" size="large" aria-label={t.ctaPrimary}>
               {t.ctaPrimary}
             </Button>
-            <Button component="a" href="/projects" variant="outlined" size="large" sx={{ color: '#fff', borderColor: 'rgba(255,255,255,.5)' }}>
-              {t.ctaSecondary}
-            </Button>
+            <Tooltip title={`Click to open Gmail compose with hassaniftikhar62@gmail.com`}>
+              <Button onClick={handleContact} variant="outlined" size="large" sx={{ color: '#fff', borderColor: 'rgba(255,255,255,.5)' }}>
+                {t.ctaSecondary}
+              </Button>
+            </Tooltip>
           </Stack>
         </Stack>
       </Container>

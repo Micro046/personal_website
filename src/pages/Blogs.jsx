@@ -27,7 +27,7 @@ import { useLang } from '../utils/i18n';
 
 const UI = {
   en: {
-    seoTitle: 'Writing & Insights — Rodrigo Arenas',
+    seoTitle: 'Writing & Insights — Hassan Iftikhar',
     seoDesc: 'Notes, articles, and insights on data science, ML, and entrepreneurship.',
     overline: 'Blog',
     title: 'Writing & Insights',
@@ -44,7 +44,7 @@ const UI = {
     mins: (m) => `${m} min`,
   },
   es: {
-    seoTitle: 'Escritura & Notas — Rodrigo Arenas',
+    seoTitle: 'Escritura & Notas — Hassan Iftikhar',
     seoDesc: 'Notas, artículos e ideas sobre ciencia de datos, ML y emprendimiento.',
     overline: 'Blog',
     title: 'Artículos y notas',
@@ -59,6 +59,23 @@ const UI = {
     stripTalk: 'Hablemos',
     new: 'Nuevo',
     mins: (m) => `${m} min`,
+  },
+  ru: {
+    seoTitle: 'Письменность и идеи — Хасан Ифтихар',
+    seoDesc: 'Заметки, статьи и идеи о науке о данных, ML и предпринимательстве.',
+    overline: 'Блог',
+    title: 'Письменность и идеи',
+    desc: 'Глубокие погружения и быстрые заметки о ML, системах данных и создании продуктов.',
+    searchPlaceholder: 'Поиск постов',
+    sortRecent: 'Самые новые',
+    sortAZ: 'Название (А → Я)',
+    ctaRead: 'Читать',
+    featured: 'Рекомендуемые',
+    stripQ: 'Хотите внедрить ML в продакшн?',
+    stripSee: 'Смотреть проекты',
+    stripTalk: 'Давайте поговорим',
+    new: 'Новый',
+    mins: (m) => `${m} мин`,
   },
 };
 
@@ -118,7 +135,7 @@ const BlogCard = ({ item, lang = 'en', ui = UI.en }) => {
         <Stack direction="row" spacing={1} alignItems="center">
           {item.date && (
             <Typography variant="caption" color="text.secondary">
-              {new Date(item.date).toLocaleDateString()}
+              {new Date(item.date).toLocaleDateString(lang === 'ru' ? 'ru-RU' : lang === 'es' ? 'es-ES' : 'en-US')}
             </Typography>
           )}
           {item.read_mins && (
@@ -185,7 +202,8 @@ export default function Blogs() {
       ? filtered.filter((it) =>
           (it.title || '').toLowerCase().includes(q) ||
           (it.description_i18n?.en || '').toLowerCase().includes(q) ||
-          (it.description_i18n?.es || '').toLowerCase().includes(q)
+          (it.description_i18n?.es || '').toLowerCase().includes(q) ||
+          (it.description_i18n?.ru || '').toLowerCase().includes(q)
         )
       : filtered;
 

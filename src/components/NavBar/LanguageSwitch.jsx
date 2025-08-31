@@ -25,6 +25,7 @@ export default function LanguageSwitch({ size = 'small' }) {
    >
       <ToggleButton value="en" aria-label="English">EN</ToggleButton>
       <ToggleButton value="es" aria-label="Spanish">ES</ToggleButton>
+      <ToggleButton value="ru" aria-label="Russian">RU</ToggleButton>
     </ToggleButtonGroup>
   );
 }

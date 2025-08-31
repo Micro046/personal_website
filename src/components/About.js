@@ -1,8 +1,7 @@
 import React from 'react';
-import { Card, CardHeader, CardContent, Typography, Box } from '@mui/material';
+import { Card, CardHeader, CardContent, Typography, Box, Avatar } from '@mui/material';
 
-const About = (props) => {
-  const { about } = props || {};
+const About = ({ about }) => {
   const { start, exit } = about || {};
 
   return (
@@ -10,14 +9,20 @@ const About = (props) => {
       <Card sx={{ backgroundColor: '#263238', color: '#f5f5f5' }}>
         <CardHeader
           avatar={
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <Box component="span" className="iconify" data-icon="emojione:red-circle" sx={{ mr: 1 }} />
-              <Box component="span" className="iconify" data-icon="twemoji:yellow-circle" sx={{ mr: 1 }} />
-              <Box component="span" className="iconify" data-icon="twemoji:green-circle" />
-            </Box>
+            <Avatar alt="Hassan Iftikhar" src="/profile.jpg" /> // replace with your image
           }
+          title="About Me"
+          titleTypographyProps={{ sx: { color: '#f5f5f5', fontWeight: 600 } }}
         />
-        <CardContent sx={{ fontSize: '132%', lineHeight: '150%', backgroundColor: '#F6F6F6', color: '#8e8d8a', p: '2rem' }}>
+        <CardContent
+          sx={{
+            fontSize: '1.1rem',
+            lineHeight: '1.6',
+            backgroundColor: '#F6F6F6',
+            color: '#444',
+            p: { xs: '1rem', sm: '2rem' },
+          }}
+        >
           <Typography variant="body1" paragraph>
             {start}
           </Typography>
@@ -29,4 +34,3 @@ const About = (props) => {
 };
 
 export default About;
-

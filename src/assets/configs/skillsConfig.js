@@ -1,53 +1,306 @@
 import {
   SiPython,
-  SiPostgresql,
-  SiDocker,
-  SiRedis,
+  SiNumpy,
+  SiPandas,
+  SiScikitlearn,
+  SiTensorflow,
+  SiPytorch,
+  SiKeras,
+  SiOpencv,
+  SiMysql,
+  SiGooglecloud,
+  SiTableau,
   SiReact,
-  SiJavascript,
-  SiCss3,
-  SiHtml5,
-  SiSnowflake,
-  SiApacheairflow,
-  SiApachekafka
+  SiDocker,
+  SiGithub,
+  SiJupyter,
+  SiNodedotjs
 } from "react-icons/si";
-import { GrMysql } from "react-icons/gr";
-import { FaGitAlt } from "react-icons/fa";
-import React from "react";
-import StorageIcon from "@mui/icons-material/Storage";
+import { FaChartLine, FaProjectDiagram, FaCloud, FaGitAlt, FaSquareRootAlt } from "react-icons/fa";
+import { GiArtificialIntelligence, GiNetworkBars } from "react-icons/gi";
+import { MdOutlineTimeline } from "react-icons/md";
 import QueryStatsIcon from "@mui/icons-material/QueryStats";
-import TerminalIcon from "@mui/icons-material/Terminal";
-import CloudIcon from "@mui/icons-material/Cloud";
+import React from "react";
 
 const ICON_SIZE = 50;
 
 const skillsConfig = {
-  mainSkills: [
-    { id: "skills-main-python", className: "skill-icon", icon: <SiPython size={ICON_SIZE} />, text: "Python" },
-    { id: "skills-main-postgres", className: "skill-icon", icon: <SiPostgresql size={ICON_SIZE} />, text: "Postgres" },
-    { id: "skills-main-mssql", className: "skill-icon", icon: <StorageIcon sx={{ fontSize: ICON_SIZE }} />, text: "MSSQL" },
-    { id: "skills-main-docker", className: "skill-icon", icon: <SiDocker size={ICON_SIZE} />, text: "Docker" },
-    { id: "skills-main-azure", className: "skill-icon", icon: <CloudIcon sx={{ fontSize: ICON_SIZE }} />, text: "Azure" },
-    { id: "skills-main-git", className: "skill-icon", icon: <FaGitAlt size={ICON_SIZE} />, text: "Git" }
+  // ✅ Core AI & ML Skills
+  coreSkills: [
+    { 
+      id: "skills-ml-ai", 
+      icon: <GiArtificialIntelligence size={ICON_SIZE} />, 
+      text: "Machine Learning / AI", 
+      category: "AI & ML", 
+      proficiency: "Expert" 
+    },
+    { 
+      id: "skills-ml-supervised", 
+      icon: <FaProjectDiagram size={ICON_SIZE} />, 
+      text: "Supervised Learning", 
+      category: "AI & ML" 
+    },
+    { 
+      id: "skills-ml-unsupervised", 
+      icon: <FaProjectDiagram size={ICON_SIZE} />, 
+      text: "Unsupervised Learning", 
+      category: "AI & ML" 
+    },
+    { 
+      id: "skills-ml-rl", 
+      icon: <GiNetworkBars size={ICON_SIZE} />, 
+      text: "Reinforcement Learning", 
+      category: "AI & ML", 
+      proficiency: "Advanced" 
+    },
+    { 
+      id: "skills-ml-generative", 
+      icon: <GiArtificialIntelligence size={ICON_SIZE} />, 
+      text: "Generative AI", 
+      category: "AI & ML", 
+      proficiency: "Advanced" 
+    },
+    { 
+      id: "skills-ml-dl", 
+      icon: <GiArtificialIntelligence size={ICON_SIZE} />, 
+      text: "Deep Learning", 
+      category: "AI & ML", 
+      proficiency: "Expert" 
+    }
   ],
-  complementarySkills: [
-    { id: "skills-comp-mysql", className: "skill-icon", icon: <GrMysql size={ICON_SIZE} />, text: "MySQL" },
-    { id: "skills-comp-redis", className: "skill-icon", icon: <SiRedis size={ICON_SIZE} />, text: "Redis" },
-    { id: "skills-comp-bash", className: "skill-icon", icon: <TerminalIcon sx={{ fontSize: ICON_SIZE }} />, text: "Bash / Terminal" },
-    { id: "skills-comp-snowflake", className: "skill-icon", icon: <SiSnowflake size={ICON_SIZE} />, text: "Snowflake" },
-    { id: "skills-comp-airflow", className: "skill-icon", icon: <SiApacheairflow size={ICON_SIZE} />, text: "Airflow" },
-    { id: "skills-comp-js", className: "skill-icon", icon: <SiJavascript size={ICON_SIZE} />, text: "JS" },
-    { id: "skills-comp-css", className: "skill-icon", icon: <SiCss3 size={ICON_SIZE} />, text: "CSS 3" },
-    { id: "skills-comp-html", className: "skill-icon", icon: <SiHtml5 size={ICON_SIZE} />, text: "HTML 5" },
-    { id: "skills-comp-react", className: "skill-icon", icon: <SiReact size={ICON_SIZE} />, text: "React" },
-    { id: "skills-comp-kafka", className: "skill-icon", icon: <SiApachekafka size={ICON_SIZE} />, text: "Kafka" },
-    { id: "skills-comp-powerbi", className: "skill-icon", icon: <QueryStatsIcon sx={{ fontSize: ICON_SIZE }} />, text: "Power BI" }
+
+  // ✅ Data Analysis & Visualization
+  dataSkills: [
+    { 
+      id: "skills-stats", 
+      icon: <MdOutlineTimeline size={ICON_SIZE} />, 
+      text: "Statistics", 
+      category: "Data Science" 
+    },
+    { 
+      id: "skills-abtesting", 
+      icon: <MdOutlineTimeline size={ICON_SIZE} />, 
+      text: "A/B Testing", 
+      category: "Data Science" 
+    },
+    { 
+      id: "skills-pca", 
+      icon: <MdOutlineTimeline size={ICON_SIZE} />, 
+      text: "PCA", 
+      category: "Data Science" 
+    },
+    { 
+      id: "skills-bayes", 
+      icon: <MdOutlineTimeline size={ICON_SIZE} />, 
+      text: "Bayesian Methods", 
+      category: "Data Science" 
+    },
+    { 
+      id: "skills-timeseries", 
+      icon: <MdOutlineTimeline size={ICON_SIZE} />, 
+      text: "Time Series", 
+      category: "Data Science" 
+    },
+    { 
+      id: "skills-pandas", 
+      icon: <SiPandas size={ICON_SIZE} />, 
+      text: "Pandas", 
+      category: "Data Analysis" 
+    },
+    { 
+      id: "skills-numpy", 
+      icon: <SiNumpy size={ICON_SIZE} />, 
+      text: "NumPy", 
+      category: "Data Analysis" 
+    },
+    { 
+      id: "skills-matplotlib", 
+      icon: <FaChartLine size={ICON_SIZE} />, 
+      text: "Matplotlib", 
+      category: "Visualization" 
+    },
+    { 
+      id: "skills-seaborn", 
+      icon: <FaChartLine size={ICON_SIZE} />, 
+      text: "Seaborn", 
+      category: "Visualization" 
+    },
+    { 
+      id: "skills-tableau", 
+      icon: <SiTableau size={ICON_SIZE} />, 
+      text: "Tableau", 
+      category: "Business Intelligence" 
+    },
+    { 
+      id: "skills-datastudio", 
+      icon: <QueryStatsIcon sx={{ fontSize: ICON_SIZE }} />, 
+      text: "Google Data Studio", 
+      category: "Business Intelligence" 
+    }
+  ],
+
+  // ✅ Cloud & DevOps
+  cloudSkills: [
+    { 
+      id: "skills-gcp", 
+      icon: <SiGooglecloud size={ICON_SIZE} />, 
+      text: "Google Cloud (GCP)", 
+      category: "Cloud", 
+      proficiency: "Advanced" 
+    },
+    { 
+      id: "skills-vertex", 
+      icon: <FaCloud size={ICON_SIZE} />, 
+      text: "Vertex AI / Cloud Run", 
+      category: "Cloud AI", 
+      proficiency: "Advanced" 
+    },
+    { 
+      id: "skills-aws", 
+      icon: <FaCloud size={ICON_SIZE} />, 
+      text: "AWS SageMaker", 
+      category: "Cloud", 
+      proficiency: "Intermediate" 
+    },
+    { 
+      id: "skills-docker", 
+      icon: <SiDocker size={ICON_SIZE} />, 
+      text: "Docker", 
+      category: "DevOps", 
+      proficiency: "Intermediate" 
+    },
+    { 
+      id: "skills-cron", 
+      icon: <FaProjectDiagram size={ICON_SIZE} />, 
+      text: "Cron Jobs", 
+      category: "DevOps" 
+    }
+  ],
+
+  // ✅ Programming & Development
+  programmingSkills: [
+    { 
+      id: "skills-prog-python", 
+      icon: <SiPython size={ICON_SIZE} />, 
+      text: "Python", 
+      category: "Programming", 
+      proficiency: "Expert" 
+    },
+    { 
+      id: "skills-prog-sklearn", 
+      icon: <SiScikitlearn size={ICON_SIZE} />, 
+      text: "Scikit-learn", 
+      category: "Programming", 
+      proficiency: "Advanced" 
+    },
+    { 
+      id: "skills-prog-tf", 
+      icon: <SiTensorflow size={ICON_SIZE} />, 
+      text: "TensorFlow", 
+      category: "Deep Learning", 
+      proficiency: "Advanced" 
+    },
+    { 
+      id: "skills-prog-pytorch", 
+      icon: <SiPytorch size={ICON_SIZE} />, 
+      text: "PyTorch", 
+      category: "Deep Learning", 
+      proficiency: "Advanced" 
+    },
+    { 
+      id: "skills-prog-keras", 
+      icon: <SiKeras size={ICON_SIZE} />, 
+      text: "Keras", 
+      category: "Deep Learning" 
+    },
+    { 
+      id: "skills-prog-scipy", 
+      icon: <FaSquareRootAlt size={ICON_SIZE} />, 
+      text: "SciPy", 
+      category: "Programming" 
+    },
+    { 
+      id: "skills-prog-opencv", 
+      icon: <SiOpencv size={ICON_SIZE} />, 
+      text: "OpenCV", 
+      category: "Computer Vision" 
+    },
+    { 
+      id: "skills-prog-matlab", 
+      icon: <FaSquareRootAlt size={ICON_SIZE} />, 
+      text: "MATLAB", 
+      category: "Programming" 
+    },
+    { 
+      id: "skills-prog-cpp", 
+      icon: <FaSquareRootAlt size={ICON_SIZE} />, 
+      text: "C++", 
+      category: "Programming" 
+    },
+    { 
+      id: "skills-prog-react", 
+      icon: <SiReact size={ICON_SIZE} />, 
+      text: "React", 
+      category: "Web Development" 
+    },
+    { 
+      id: "skills-prog-node", 
+      icon: <SiNodedotjs size={ICON_SIZE} />, 
+      text: "Node.js", 
+      category: "Web Development" 
+    }
+  ],
+
+  // ✅ Databases & Warehousing
+  databaseSkills: [
+    { 
+      id: "skills-db-bigquery", 
+      icon: <SiGooglecloud size={ICON_SIZE} />, 
+      text: "Google BigQuery", 
+      category: "Data Warehouse", 
+      proficiency: "Advanced" 
+    },
+    { 
+      id: "skills-db-mysql", 
+      icon: <SiMysql size={ICON_SIZE} />, 
+      text: "MySQL / Workbench", 
+      category: "Database" 
+    },
+    { 
+      id: "skills-db-etl", 
+      icon: <FaProjectDiagram size={ICON_SIZE} />, 
+      text: "ETL Pipelines", 
+      category: "Data Engineering" 
+    },
+    { 
+      id: "skills-db-talend", 
+      icon: <FaProjectDiagram size={ICON_SIZE} />, 
+      text: "Talend", 
+      category: "Data Engineering" 
+    }
+  ],
+
+  // ✅ Workflow & Tools
+  toolSkills: [
+    { 
+      id: "skills-git", 
+      icon: <FaGitAlt size={ICON_SIZE} />, 
+      text: "Git", 
+      category: "Version Control" 
+    },
+    { 
+      id: "skills-github", 
+      icon: <SiGithub size={ICON_SIZE} />, 
+      text: "GitHub", 
+      category: "Version Control" 
+    },
+    { 
+      id: "skills-jupyter", 
+      icon: <SiJupyter size={ICON_SIZE} />, 
+      text: "Jupyter", 
+      category: "Development" 
+    }
   ]
 };
 
 export default skillsConfig;
-
-
-
-
-

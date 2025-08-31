@@ -1,0 +1,5 @@
+My name is Hassan Iftikhar. I’m a data scientist and AI researcher with a passion for machine learning, deep learning, and reinforcement learning. I grew up in Pakistan, studied electrical engineering at Namal University, and later moved to Moscow to pursue a Master’s in Data Science at Skolkovo Institute of Science and Technology.
+
+I’ve worked across different industries—from building predictive analytics and data pipelines for mobile games in Dubai, to designing real-time speaker feedback systems at Sberbank AI, to researching reinforcement learning and generative AI at Skoltech. I enjoy tackling complex problems, whether it’s segmenting players to boost engagement, improving healthcare diagnostics with computer vision, or developing cutting-edge AI models.
+
+Outside of work, I’m deeply curious about how AI can transform everyday life, and I like exploring projects that mix research with practical impact.

@@ -16,6 +16,9 @@ import Home from './pages/Home/Home';
 import Projects from './pages/Projects';
 import Blogs from './pages/Blogs';
 import Skills from './pages/Skills/Skills';
+import Chatbot from './pages/Chatbot';
+import ChatbotComponent from './components/Chatbot';
+import Seo from './components/Seo';
 
 
 if (process.env.REACT_APP_TRACKING_ID) {
@@ -40,6 +43,10 @@ export default function App() {
       <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
         <Router>
           <AnalyticsTracker />
+          <Seo 
+            title="Hassan Iftikhar | Portfolio"
+            description="Data Scientist & AI Researcher specializing in Machine Learning, Deep Learning, and Generative AI solutions."
+          />
           <NavBar />
           <Box component="main" sx={{ flex: 1 }}>
             <Routes>
@@ -47,10 +54,14 @@ export default function App() {
               <Route path="/projects" element={<Projects />} />
               <Route path="/blogs" element={<Blogs />} />
               <Route path="/skills" element={<Skills />} />
+              <Route path="/chatbot" element={<Chatbot />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </Box>
           <Footer />
+          
+          {/* Floating Chatbot Component - appears on all pages */}
+          <ChatbotComponent />
         </Router>
       </Box>
     </ThemeProvider>

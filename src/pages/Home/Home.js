@@ -13,7 +13,16 @@ export default function Home() {
   const [lang] = useLang();
   const canonical = typeof window !== 'undefined' ? window.location.href : undefined;
 
-  const titles = homeConfig.titles_i18n?.[lang] || homeConfig.titles || ['Data Scientist'];
+  const titles =
+    homeConfig.titles_i18n?.[lang] ||
+    homeConfig.titles || [
+      'Data Scientist',
+      'ML Engineer',
+      'Generative AI',
+      'Cloud',
+      'RL Engineer',
+    ];
+
   const about = homeConfig.about_i18n?.[lang] || homeConfig.about || { start: '', exit: '' };
 
   const timelineItems = (homeConfig.workTimeline || []).map((it) => ({
@@ -25,9 +34,9 @@ export default function Home() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Person',
-    name: 'Rodrigo Arenas',
+    name: 'Hassan Iftikhar',
     url: canonical,
-    jobTitle: titles?.[0] || 'Data Scientist',
+    jobTitle: titles?.[0] || 'Data Scientist & ML Engineer',
   };
 
   // greeting may be a JSX node (from config) or a string; handle both
@@ -37,11 +46,15 @@ export default function Home() {
   return (
     <section>
       <Seo
-        title={lang === 'es' ? 'Rodrigo Arenas — Científico de Datos & Consultor' : 'Rodrigo Arenas — Data Scientist & Consultant'}
+        title={
+          lang === 'es'
+            ? 'Hassan Iftikhar — Científico de Datos & ML Engineer'
+            : 'Hassan Iftikhar — Data Scientist & ML Engineer'
+        }
         description={
           lang === 'es'
-            ? 'Consultoría en ML y datos: LLMs, RAG, AutoML, analítica en Azure. Proyectos, artículos y experiencia.'
-            : 'ML & data consulting: LLMs, RAG, AutoML, analytics on Azure. Selected projects, writing, and experience.'
+            ? 'Ciencia de Datos e Ingeniería de ML: IA generativa, visión por computador, aprendizaje por refuerzo y soluciones en la nube.'
+            : 'Data Scientist & ML Engineer specializing in Generative AI, Reinforcement Learning, Cloud AI, and Computer Vision. Explore projects, writing, and experience.'
         }
         canonical={canonical}
         jsonLd={jsonLd}
@@ -73,12 +86,10 @@ export default function Home() {
         <Typography component="h2" variant="h4" sx={{ fontWeight: 800, mb: 3 }}>
           {ExperienceLabel}
         </Typography>
-        <Box sx={{ width: '100%', maxWidth: '960px' }}>
+        <Box sx={{ width: '100%', maxWidth: '1200px' }}>
           <Timeline items={timelineItems} />
         </Box>
       </Container>
     </section>
   );
 }
-
-
