@@ -18,3 +18,5 @@ services:
     envVars:
       - key: REACT_APP_API_URL
         value: https://personal-website-7s6r.onrender.com
+      - key: REACT_APP_CHATBOT_API_URL
+        value: https://personal-website-7s6r.onrender.com
