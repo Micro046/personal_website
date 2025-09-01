@@ -145,6 +145,8 @@ def push(message):
             requests.post(pushover_url, data=payload)
         except Exception as e:
             print(f"Pushover error: {e}")
+    else:
+        print("Pushover credentials not configured")
 
 def record_user_details(email, name="Name not provided", notes="not provided"):
     push(f"Recording interest from {name} with email {email} and notes {notes}")
@@ -194,7 +196,7 @@ async def chat_endpoint(request: ChatRequest):
                 message = response.choices[0].message
                 tool_calls = message.tool_calls
                 results = handle_tool_calls(tool_calls)
-                messages.append(message)
+                messages.append(message.model_dump())
                 messages.extend(results)
             else:
                 done = True
@@ -208,10 +210,7 @@ async def chat_endpoint(request: ChatRequest):
         print(f"Chat error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
-# Health check endpoint
-@app.get("/health")
-async def health_check():
-    return {"status": "healthy", "message": "Chatbot API is running"}
+
 
 # Root endpoint
 @app.get("/")

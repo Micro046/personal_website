@@ -1,6 +1,6 @@
-import React from 'react';
-import { Container, Box, Typography, Paper, Chip, TextField, IconButton } from '@mui/material';
-import { SmartToy as BotIcon, Psychology as BrainIcon, Email as EmailIcon, Send as SendIcon } from '@mui/icons-material';
+import React, { useState, useRef, useEffect } from 'react';
+import { Container, Box, Typography, Paper, Chip, TextField, IconButton, Avatar, CircularProgress } from '@mui/material';
+import { SmartToy as BotIcon, Psychology as BrainIcon, Email as EmailIcon, Send as SendIcon, Person as UserIcon } from '@mui/icons-material';
 import { useLang } from '../utils/i18n';
 import Chatbot from '../components/Chatbot';
 
@@ -52,6 +52,113 @@ const UI = {
 export default function ChatbotPage() {
   const [lang] = useLang();
   const t = UI[lang] || UI.en;
+
+  // Chat state
+  const [messages, setMessages] = useState([]);
+  const [inputMessage, setInputMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  
+  const messagesEndRef = useRef(null);
+  const inputRef = useRef(null);
+
+  // API configuration
+  const API_BASE_URL = process.env.REACT_APP_CHATBOT_API_URL || 'http://localhost:8000';
+
+  // Scroll to bottom when new messages arrive
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
+
+  // Initialize with welcome message
+  useEffect(() => {
+    if (messages.length === 0) {
+      setMessages([
+        {
+          id: Date.now(),
+          role: 'assistant',
+          content: "Hi! I'm Hassan's AI assistant. I have access to his complete professional background, including his resume, projects, and experience. How can I help you today?",
+          timestamp: new Date()
+        }
+      ]);
+    }
+  }, []);
+
+  const sendMessage = async () => {
+    if (!inputMessage.trim() || isLoading) return;
+
+    const userMessage = {
+      id: Date.now(),
+      role: 'user',
+      content: inputMessage.trim(),
+      timestamp: new Date()
+    };
+
+    setMessages(prev => [...prev, userMessage]);
+    setInputMessage('');
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/chat`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          message: userMessage.content,
+          history: messages.map(msg => ({
+            role: msg.role,
+            content: msg.content
+          }))
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      
+      if (data.success) {
+        const botMessage = {
+          id: Date.now() + 1,
+          role: 'assistant',
+          content: data.response,
+          timestamp: new Date()
+        };
+        setMessages(prev => [...prev, botMessage]);
+      } else {
+        throw new Error('API returned error');
+      }
+    } catch (err) {
+      console.error('Chat error:', err);
+      const errorMessage = {
+        id: Date.now() + 1,
+        role: 'assistant',
+        content: 'Sorry, I encountered an error. Please try again.',
+        timestamp: new Date(),
+        isError: true
+      };
+      setMessages(prev => [...prev, errorMessage]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  };
+
+  const formatTime = (timestamp) => {
+    return timestamp.toLocaleTimeString([lang === 'ru' ? 'ru-RU' : lang === 'es' ? 'es-ES' : 'en-US'], {
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  };
 
   return (
     <>
@@ -152,98 +259,190 @@ export default function ChatbotPage() {
                 bgcolor: 'grey.50',
               }}
             >
-              {/* Welcome Message */}
-              <Box
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'flex-start',
-                  gap: 2,
-                }}
-              >
+              {/* Messages */}
+              {messages.map((message) => (
+                <Box
+                  key={message.id}
+                  sx={{
+                    display: 'flex',
+                    justifyContent: message.role === 'user' ? 'flex-end' : 'flex-start',
+                    gap: 2,
+                  }}
+                >
+                  {message.role === 'assistant' && (
+                    <Avatar
+                      sx={{
+                        width: 40,
+                        height: 40,
+                        bgcolor: 'primary.main',
+                      }}
+                    >
+                      <BotIcon />
+                    </Avatar>
+                  )}
+                  
+                  <Box
+                    sx={{
+                      maxWidth: '80%',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: 0.5,
+                    }}
+                  >
+                    <Paper
+                      elevation={1}
+                      sx={{
+                        p: 2,
+                        bgcolor: message.role === 'user' ? 'primary.main' : 'white',
+                        color: message.role === 'user' ? 'white' : 'text.primary',
+                        borderRadius: 2,
+                        borderTopLeftRadius: message.role === 'user' ? 2 : 0,
+                        borderTopRightRadius: message.role === 'assistant' ? 2 : 0,
+                      }}
+                    >
+                      <Typography
+                        variant="body1"
+                        sx={{
+                          whiteSpace: 'pre-wrap',
+                          wordBreak: 'break-word',
+                          color: message.isError ? 'error.main' : 'inherit',
+                        }}
+                      >
+                        {message.content}
+                      </Typography>
+                    </Paper>
+                    
+                    <Typography
+                      variant="caption"
+                      sx={{
+                        color: 'text.secondary',
+                        alignSelf: message.role === 'user' ? 'flex-end' : 'flex-start',
+                        fontSize: '0.7rem',
+                      }}
+                    >
+                      {formatTime(message.timestamp)}
+                    </Typography>
+                  </Box>
+
+                  {message.role === 'user' && (
+                    <Avatar
+                      sx={{
+                        width: 40,
+                        height: 40,
+                        bgcolor: 'secondary.main',
+                      }}
+                    >
+                      <UserIcon />
+                    </Avatar>
+                  )}
+                </Box>
+              ))}
+
+              {/* Loading indicator */}
+              {isLoading && (
                 <Box
                   sx={{
-                    width: 40,
-                    height: 40,
-                    borderRadius: '50%',
-                    bgcolor: 'primary.main',
                     display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: 'white',
+                    justifyContent: 'flex-start',
+                    gap: 2,
                   }}
                 >
-                  <BotIcon />
+                  <Avatar
+                    sx={{
+                      width: 40,
+                      height: 40,
+                      bgcolor: 'primary.main',
+                    }}
+                  >
+                    <BotIcon />
+                  </Avatar>
+                  <Paper
+                    elevation={1}
+                    sx={{
+                      p: 2,
+                      bgcolor: 'white',
+                      borderRadius: 2,
+                      borderTopLeftRadius: 0,
+                    }}
+                  >
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                      <CircularProgress size={16} />
+                      <Typography variant="body1" color="text.secondary">
+                        Thinking...
+                      </Typography>
+                    </Box>
+                  </Paper>
                 </Box>
-                
-                <Paper
-                  elevation={1}
-                  sx={{
-                    p: 2,
-                    bgcolor: 'white',
-                    borderRadius: 2,
-                    borderTopLeftRadius: 0,
-                    maxWidth: '80%',
-                  }}
-                >
-                  <Typography variant="body1">
-                    Hi! I'm Hassan's AI assistant. I have access to his complete professional background, including his resume, projects, and experience. How can I help you today?
-                  </Typography>
-                </Paper>
-              </Box>
+              )}
 
               {/* Tip */}
-              <Box sx={{ textAlign: 'center', mt: 2 }}>
-                <Chip
-                  label="💡 Try asking: 'Tell me about your ML projects' or 'What are your key skills?'"
-                  size="small"
-                  sx={{
-                    bgcolor: 'primary.light',
-                    color: 'primary.contrastText',
-                    fontSize: '0.75rem',
-                  }}
-                />
-              </Box>
+              {messages.length === 1 && !isLoading && (
+                <Box sx={{ textAlign: 'center', mt: 2 }}>
+                  <Chip
+                    label="💡 Try asking: 'Tell me about your ML projects' or 'What are your key skills?'"
+                    size="small"
+                    sx={{
+                      bgcolor: 'primary.light',
+                      color: 'primary.contrastText',
+                      fontSize: '0.75rem',
+                    }}
+                  />
+                </Box>
+              )}
+
+              <div ref={messagesEndRef} />
             </Box>
 
-                         {/* Chat Input Area */}
-             <Box
-               sx={{
-                 p: 3,
-                 bgcolor: 'white',
-                 borderTop: 1,
-                 borderColor: 'divider',
-               }}
-             >
-               <Box sx={{ display: 'flex', gap: 1 }}>
-                 <TextField
-                   fullWidth
-                   size="small"
-                   placeholder="Type your message..."
-                   multiline
-                   maxRows={3}
-                   sx={{
-                     '& .MuiOutlinedInput-root': {
-                       borderRadius: 2,
-                     },
-                   }}
-                 />
-                 <IconButton
-                   sx={{
-                     bgcolor: 'primary.main',
-                     color: 'white',
-                     '&:hover': {
-                       bgcolor: 'primary.dark',
-                     },
-                   }}
-                 >
-                   <SendIcon />
-                 </IconButton>
-               </Box>
-               
-                                  <Typography variant="caption" sx={{ display: 'block', textAlign: 'center', mt: 2, color: 'text.secondary' }}>
-                     💡 Type a message above or use the floating chat button for the full interactive experience!
-                   </Typography>
-             </Box>
+            {/* Chat Input Area */}
+            <Box
+              sx={{
+                p: 3,
+                bgcolor: 'white',
+                borderTop: 1,
+                borderColor: 'divider',
+              }}
+            >
+              <Box sx={{ display: 'flex', gap: 1 }}>
+                <TextField
+                  ref={inputRef}
+                  fullWidth
+                  size="small"
+                  placeholder="Type your message..."
+                  value={inputMessage}
+                  onChange={(e) => setInputMessage(e.target.value)}
+                  onKeyPress={handleKeyPress}
+                  disabled={isLoading}
+                  multiline
+                  maxRows={3}
+                  sx={{
+                    '& .MuiOutlinedInput-root': {
+                      borderRadius: 2,
+                    },
+                  }}
+                />
+                <IconButton
+                  onClick={sendMessage}
+                  disabled={!inputMessage.trim() || isLoading}
+                  sx={{
+                    bgcolor: 'primary.main',
+                    color: 'white',
+                    '&:hover': {
+                      bgcolor: 'primary.dark',
+                    },
+                    '&:disabled': {
+                      bgcolor: 'grey.300',
+                      color: 'grey.500',
+                    },
+                  }}
+                >
+                  <SendIcon />
+                </IconButton>
+              </Box>
+              
+              <Typography variant="caption" sx={{ display: 'block', textAlign: 'center', mt: 2, color: 'text.secondary' }}>
+                💡 Type a message above or use the floating chat button for the full interactive experience!
+              </Typography>
+            </Box>
           </Paper>
         </Box>
       </Container>
